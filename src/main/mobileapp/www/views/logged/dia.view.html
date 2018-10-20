@@ -1,0 +1,58 @@
+<ion-view cache-view="false" view-title="dia" hide-back-button="true">
+  <ion-nav-buttons side="right"> 
+    <button class="button button-stable" ng-hide="dia.inserting || dia.editing" ng-click="dia.startInserting()"> <i class="icon ion-plus-round"></i> </button>
+    <button class="button button-stable" ng-show="dia.inserting || dia.editing" ng-click="dia.post()"> <i class="icon ion-checkmark"></i> </button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="left">
+    <button class="button button-icon button-clear ion-navicon" ng-hide="dia.inserting || dia.editing" menu-toggle="left"> </button>
+    <button class="button button-stable" ng-show="dia.inserting || dia.editing" ng-click="dia.cancel()"> <i class="icon ion-android-arrow-back"></i> </button>
+  </ion-nav-buttons>
+  <ion-content>
+    <div ng-hide="dia.inserting || dia.editing" data-component="crn-datasource-filter" id="crn-datasource-filter-general" class="">
+      <label class="item item-input" id="cloud-search1">
+        <i class="icon ion-search placeholder-icon"></i>
+        <input type="text"  ng-model="vars.search" cronapp-filter="dia;" cronapp-filter-operator="" cronapp-filter-autopost="true" crn-datasource="dia" value="" placeholder="{{'template.crud.search' | translate}}">
+      </label>
+    </div>   
+    <div class="component-holder ng-binding ng-scope ui-draggable ui-draggable-handle" data-component="crn-datasource" id="crn-datasource-906854">
+      <datasource  name="dia" entity="api/cronapi/crud/app.entity.dia" keys="id" rows-per-page="10" delete-message="Deseja remover?" class=""></datasource>
+    </div>
+    <div crn-datasource="dia" class="" ng-hide="dia.editing || dia.inserting">
+      <ion-list can-swipe="listCanSwipe">
+        <ion-item ng-repeat="rowData in datasource.data" class="item" ng-click="datasource.startEditing(rowData)">
+          <div class="row">
+            <div class="col">
+              {{rowData.dia}}
+            </div>
+          </div>
+          <ion-option-button class="button-positive" ng-click="datasource.startEditing(rowData)">
+            <i class="icon ion-edit"></i>
+          </ion-option-button>
+          <ion-option-button class="button-assertive" ng-click="datasource.remove(rowData)">
+            &nbsp;
+            <i class="icon ion-trash-a"></i>
+          </ion-option-button>
+        </ion-item>
+      </ion-list>
+    </div>
+    <div ng-show="dia.editing || dia.inserting">
+      <form crn-datasource="dia">
+        <fieldset ng-disabled="!dia.editing &amp;&amp; !dia.inserting">
+          <div class="list">
+            <!-- dia begin -->
+            <label for="textinput-dia" class="item item-input item-stacked-label">
+            <span class="input-label">Dia</span>
+            <input
+            type="text"
+            placeholder="Dia"
+            ng-model="dia.active.dia"
+            id="textinput-dia"
+            name="textinput-dia"
+            >
+            </label>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </ion-content>
+</ion-view>

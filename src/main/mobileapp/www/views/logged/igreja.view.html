@@ -1,0 +1,90 @@
+<ion-view cache-view="false" view-title="igreja" hide-back-button="true"> 
+  <ion-nav-buttons side="right"> 
+    <button class="button button-stable" ng-hide="igreja.inserting || igreja.editing" ng-click="igreja.startInserting()"> <i class="icon ion-plus-round"></i> </button> 
+    <button class="button button-stable" ng-show="igreja.inserting || igreja.editing" ng-click="igreja.post()"> <i class="icon ion-checkmark"></i> </button> 
+  </ion-nav-buttons> 
+  <ion-nav-buttons side="left"> 
+    <button class="button button-icon button-clear ion-navicon" ng-hide="igreja.inserting || igreja.editing" menu-toggle="left"> </button> 
+    <button class="button button-stable" ng-show="igreja.inserting || igreja.editing" ng-click="igreja.cancel()"> <i class="icon ion-android-arrow-back"></i> </button> 
+  </ion-nav-buttons> 
+  <ion-content> 
+    <div ng-hide="igreja.inserting || igreja.editing" data-component="crn-datasource-filter" id="crn-datasource-filter-general" class=""> 
+      <label class="item item-input" id="cloud-search1"> <i class="icon ion-search placeholder-icon"></i> <input type="text" ng-model="vars.search" cronapp-filter="nome;horarioEnsaio;fk_setor;fk_user" cronapp-filter-operator="" cronapp-filter-autopost="true" crn-datasource="igreja" value="" placeholder="{{'template.crud.search' | translate}}"> </label> 
+    </div> 
+    <div class="component-holder ng-binding ng-scope ui-draggable ui-draggable-handle" data-component="crn-datasource" id="crn-datasource-906854"> 
+      <datasource name="igreja" entity="api/cronapi/crud/app.entity.igreja" keys="id" rows-per-page="10" delete-message="Deseja remover?" class=""></datasource> 
+    </div> 
+    <div crn-datasource="igreja" class="" ng-hide="igreja.editing || igreja.inserting"> 
+      <ion-list can-swipe="listCanSwipe"> 
+        <ion-item ng-repeat="rowData in datasource.data" class="item" ng-click="datasource.startEditing(rowData)"> 
+          <div class="row"> 
+            <div class="col">
+               {{rowData.nome}} 
+            </div> 
+            <div class="col">
+               {{rowData.numeroDia.numeroDia}} 
+            </div> 
+            <div class="col">
+               {{rowData.dia.dia}} 
+            </div> 
+            <div class="col">
+               {{rowData.horarioEnsaio}} 
+            </div> 
+            <div class="col">
+               {{rowData.periodo.periodo}} 
+            </div> 
+          </div> 
+          <ion-option-button class="button-positive" ng-click="datasource.startEditing(rowData)"> 
+            <i class="icon ion-edit"></i> 
+          </ion-option-button> 
+          <ion-option-button class="button-assertive" ng-click="datasource.remove(rowData)">
+             &nbsp; 
+            <i class="icon ion-trash-a"></i> 
+          </ion-option-button> 
+        </ion-item> 
+      </ion-list> 
+    </div> 
+    <div ng-show="igreja.editing || igreja.inserting"> 
+      <form crn-datasource="igreja"> 
+        <fieldset ng-disabled="!igreja.editing &amp;&amp; !igreja.inserting"> 
+          <div class="list"> 
+            <!-- nome begin --> 
+            <label for="textinput-nome" class="item item-input item-stacked-label"> <span class="input-label">Nome</span> <input type="text" placeholder="Nome" ng-model="igreja.active.nome" id="textinput-nome" name="textinput-nome" required=""> </label> 
+            <!-- numeroDia begin --> 
+            <datasource name="NumeroDia" entity="api/cronapi/crud/app.entity.NumeroDia" keys="id" class=""></datasource> 
+            <label for="textinput-numeroDia" class="item item-input item-select"> <span class="input-label">Nº do Dia</span> <select ng-model="igreja.active.numeroDia" class="form-control" id="textinput-numeroDia" name="textinput-numeroDia" ng-options="opt as opt.numeroDia for opt in NumeroDia.data track by opt.id"> <option value="">None</option> </select> </label> 
+            <!-- dia begin --> 
+            <datasource name="dia" entity="api/cronapi/crud/app.entity.dia" keys="id" class=""></datasource> 
+            <label for="textinput-dia" class="item item-input item-select"> <span class="input-label">Dia</span> <select ng-model="igreja.active.dia" class="form-control" id="textinput-dia" name="textinput-dia" ng-options="opt as opt.dia for opt in dia.data track by opt.id"> <option value="">None</option> </select> </label> 
+            <!-- horarioEnsaio begin --> 
+            <label for="textinput-horarioEnsaio" class="item item-input item-stacked-label"> <span class="input-label">Horário do Ensaio</span> <input type="text" placeholder="Horário do Ensaio" ng-model="igreja.active.horarioEnsaio" id="textinput-horarioEnsaio" name="textinput-horarioEnsaio"> </label> 
+            <!-- periodo begin --> 
+            <datasource name="Periodo" entity="api/cronapi/crud/app.entity.Periodo" keys="id" class=""></datasource> 
+            <label for="textinput-periodo" class="item item-input item-select"> <span class="input-label">Período</span> <select ng-model="igreja.active.periodo" class="form-control" id="textinput-periodo" name="textinput-periodo" ng-options="opt as opt.periodo for opt in Periodo.data track by opt.id"> <option value="">None</option> </select> </label> 
+            <!-- setor begin --> 
+            <datasource name="Setor" entity="api/cronapi/crud/app.entity.Setor" keys="id" class=""></datasource> 
+            <label for="textinput-setor" class="item item-input item-select"> <span class="input-label">Setor</span> <select ng-model="igreja.active.setor" class="form-control" id="textinput-setor" name="textinput-setor" ng-options="opt as opt.nome for opt in Setor.data track by opt.id"> <option value="">None</option> </select> </label> 
+            <!-- estado begin --> 
+            <datasource name="Estado" entity="api/cronapi/crud/app.entity.Estado" keys="id" class=""></datasource> 
+            <label for="textinput-estado" class="item item-input item-select"> <span class="input-label">Estado</span> <select ng-model="igreja.active.estado" class="form-control" id="textinput-estado" name="textinput-estado" ng-options="opt as opt.nome for opt in Estado.data track by opt.id"> <option value="">None</option> </select> </label> 
+            <!-- cidade begin --> 
+            <datasource name="Cidade" entity="api/cronapi/crud/app.entity.Cidade" keys="id" class=""></datasource> 
+            <label for="textinput-cidade" class="item item-input item-select"> <span class="input-label">Cidade</span> <select ng-model="igreja.active.cidade" class="form-control" id="textinput-cidade" name="textinput-cidade" ng-options="opt as opt.cidade for opt in Cidade.data track by opt.id"> <option value="">None</option> </select> </label> 
+            <!-- bairro begin --> 
+            <datasource name="bairro" entity="api/cronapi/crud/app.entity.bairro" keys="id" class=""></datasource> 
+            <label for="textinput-bairro" class="item item-input item-select"> <span class="input-label">Bairro</span> <select ng-model="igreja.active.bairro" class="form-control" id="textinput-bairro" name="textinput-bairro" ng-options="opt as opt.nome for opt in bairro.data track by opt.id"> <option value="">None</option> </select> </label> 
+            <!-- user begin --> 
+             
+            <div class="component-holder ng-binding ng-scope" data-component="crn-datasource" id="crn-datasource-977438"><datasource name="User" entity="api/cronapi/query/1k1zjo7unxu8x/" keys="id" rows-per-page="200" on-before-create="" on-after-create="" on-before-update="" on-after-update="" on-before-delete="" on-after-delete="" on-after-fill=""></datasource></div><label for="textinput-user" class="item item-input item-select"> <span class="input-label">Enc. Local</span> <select ng-model="igreja.active.user" class="form-control" id="textinput-user" name="textinput-user" ng-options="opt as opt.name for opt in User.data track by opt.id"> <option value="">Selecione</option> </select> </label> 
+            <!-- encregional begin --> 
+            <datasource name="User" entity="api/cronapi/query/qdqh7xu0scom/" keys="id" class=""></datasource> 
+            <label for="textinput-encregional" class="item item-input item-select"> <span class="input-label">Enc. Regional</span> <select ng-model="igreja.active.encregional" class="form-control" id="textinput-encregional" name="textinput-encregional" ng-options="opt as opt.email for opt in User.data track by opt.id"> <option value="">None</option> </select> </label> 
+            <!-- examinadora begin --> 
+            <datasource name="User" entity="api/cronapi/crud/app.entity.User" keys="id" class=""></datasource> 
+            <label for="textinput-examinadora" class="item item-input item-select"> <span class="input-label">Examinadora</span> <select ng-model="igreja.active.examinadora" class="form-control" id="textinput-examinadora" name="textinput-examinadora" ng-options="opt as opt.email for opt in User.data track by opt.id"> <option value="">None</option> </select> </label> 
+          </div> 
+        </fieldset> 
+      </form> 
+    </div> 
+  </ion-content> 
+</ion-view>
